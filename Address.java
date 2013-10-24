@@ -24,8 +24,8 @@ public class Address {
 	public Address(int decimalAddress) {
 		this.addressValue = decimalAddress;
 		this.tagValue = (decimalAddress >>> offsetNumBits) >>> indexNumBits;
-		this.indexValue = (decimalAddress >>> offsetNumBits) % (int)Math.pow(2,indexNumBits);
-		this.offsetValue = decimalAddress % (int)Math.pow(2,offsetNumBits);
+		this.indexValue = (decimalAddress >>> offsetNumBits) % (1 << indexNumBits);
+		this.offsetValue = decimalAddress % (1 << offsetNumBits);
 	}
 	
 	public int getAddressValue() {

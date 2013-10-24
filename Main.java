@@ -48,7 +48,7 @@ public class Main {
 		try {
 			reader = new FileReader(file);
 		} catch (FileNotFoundException e) {
-			System.err.println("File does not exist");
+			System.err.println("File " + file + " does not exist");
 			System.exit(0);
 		}
 		
@@ -56,7 +56,8 @@ public class Main {
 		simulator.begin();
 		
 		System.out.println("Nicholas Barnes");
-		System.out.println(String.format("Cache size number of bits: %i Blocksize number of bits: %i Tracing: %s File: %s",
+		System.out.println(String.format("%d %d %s %s",
 				cacheSizeNumBits, blockSizeNumBits, tracingOption, file));
+		simulator.printStats();
 	}
 }

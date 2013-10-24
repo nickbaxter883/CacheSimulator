@@ -13,6 +13,10 @@ public class CacheManager {
 		
 		numHits = 0;
 		numMisses = 0;
+		
+		if (tracing) {
+			System.out.println("Addr|Tag|Idx|CTag|H/M|NumH|NumM|Acc|MR|");
+		}
 	}
 	
 	public void update(Address address) {
@@ -35,6 +39,7 @@ public class CacheManager {
 				Integer.toHexString(address.getAddressValue()),
 				Integer.toHexString(address.getTagValue()),
 				Integer.toHexString(address.getIndexValue()),
+				//Assuming a direct mapped cache, there is only one block per set
 				Integer.toHexString(set.first().getTagValue()),
 				result,
 				numHits,

@@ -20,7 +20,7 @@ public class CacheSimulation {
 		this.cacheSizeNumBits = cacheSizeNumBits;
 		this.blockSizeNumBits = blockSizeNumBits;
 		this.indexNumBits = cacheSizeNumBits - blockSizeNumBits - ASSOCIATIVITY;
-		this.numSets = (int)Math.pow(2, indexNumBits);
+		this.numSets = 1 << indexNumBits;
 		
 		cache = new CacheSet[numSets];
 		for (CacheSet set : cache) {
@@ -44,5 +44,11 @@ public class CacheSimulation {
 		} catch (IOException e) {
 			System.err.println("Something went wrong while reading the file");
 		}
+	}
+	
+	void printStats() {
+		System.out.println("hits: " + manager.getHits());
+		System.out.println("misses: " + manager.getMisses());
+		System.out.println("miss ratio: " + manager.getMissRatio());
 	}
 }
