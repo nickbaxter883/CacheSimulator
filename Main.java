@@ -5,35 +5,38 @@ import java.io.FileReader;
 
 public class Main {
 	public static void main(String[] args) {
-		String s = "5";
-		Integer i = 5;
-		System.out.println();
+		
+		int cacheSizeNumBits = 0;
+		int blockSizeNumBits = 0;
+		String tracingOption = "";
+		boolean tracing = false;
+		String file = "";
+		FileReader reader = null;
+		
 		if (args.length != 4) {
 			System.err.println("Usage: <num bits for cache size> " +
 				"<num bits for block size> <tracing> <file>");
 			System.exit(0);
 		}
 		
-		int cacheSizeBits = 0;
-		int blockSizeBits = 0;
 		try {
-			cacheSizeBits = Integer.parseInt(args[0]);
-			blockSizeBits = Integer.parseInt(args[1]);
+			cacheSizeNumBits = Integer.parseInt(args[0]);
+			blockSizeNumBits = Integer.parseInt(args[1]);
 		} catch (NumberFormatException e) {
 			System.err.println("Argument format error");
 			System.exit(0);
 		}
 		
-		if (cacheSizeBits <= 0 || blockSizeBits <= 0) {
-			System.err.println("Invalid parameter");
+		if (cacheSizeNumBits <= 0 || blockSizeNumBits <= 0 || cacheSizeNumBits < blockSizeNumBits) {
+			System.err.println("Invalid size parameter");
 			System.exit(0);
 		}
 		
-		boolean tracing = false;
-		if (args[2].equals("on")) {
+		tracingOption = args[2];
+		if (tracingOption.equals("on")) {
 			tracing = true;
 		}
-		else if (args[2].equals("off")) {
+		else if (tracingOption.equals("off")) {
 			tracing = false;
 		}
 		else {
@@ -41,14 +44,19 @@ public class Main {
 			System.exit(0);
 		}
 		
-		BufferedReader reader = null;
+		file = args[3];
 		try {
-			reader = new BufferedReader(new FileReader(args[3]));
+			reader = new FileReader(file);
 		} catch (FileNotFoundException e) {
 			System.err.println("File does not exist");
 			System.exit(0);
 		}
 		
-		CacheSimulation simulator = new CacheSimulation(cacheSizeBits, blockSizeBits, tracing, reader);
+		CacheSimulation simulator = new CacheSimulation(cacheSizeNumBits, blockSizeNumBits, tracing, reader);
+		simulator.begin();
+		
+		System.out.println("Nicholas Barnes");
+		System.out.println(String.format("Cache size number of bits: %i Blocksize number of bits: %i Tracing: %s File: %s",
+				cacheSizeNumBits, blockSizeNumBits, tracingOption, file));
 	}
 }
